@@ -5,6 +5,7 @@
   "author": "Devin Eldreth <devin.eldreth@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "nodemon src/index.js",
     "deploy": "prisma deploy",
     "dockerize": "docker-compose -f database/docker-compose.yml up -d",
     "get-schema": "graphql get-schema --project database",
@@ -14,6 +15,7 @@
     "apollo-server": "2.1.0",
     "graphql": "14.0.2",
     "graphql-import": "0.7.1",
+    "nodemon": "1.18.4",
     "prisma": "1.17.1",
     "prisma-binding": "2.1.6"
   },
