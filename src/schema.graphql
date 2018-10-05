@@ -1,0 +1,29 @@
+# import Location from './generated/prisma.graphql'
+# import Cat from './generated/prisma.graphql'
+
+input LocationInput {
+  name: String!
+}
+
+input CatInput {
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+}
+
+type Query {
+  location(id: ID!): Location!
+  cat(id: ID!): Cat!
+  getLocations: [Location]!
+}
+
+type Mutation {
+  addLocation(input: LocationInput): Location!
+  addCat(locationId: ID!, input: CatInput): Cat!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

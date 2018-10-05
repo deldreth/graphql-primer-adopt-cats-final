@@ -1,0 +1,25 @@
+type Location {
+  id: ID! @unique
+  name: String!
+  cats: [Cat!]!
+}
+
+type Cat {
+  id: ID! @unique
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+  location: Location
+}
+
+input LocationInput {
+  name: String!
+}
+
+input CatInput {
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+}

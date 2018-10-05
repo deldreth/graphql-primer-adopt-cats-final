@@ -1,0 +1,22 @@
+{
+  "name": "graphql-primer-adopt-cats",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "Devin Eldreth <devin.eldreth@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "prisma deploy",
+    "dockerize": "docker-compose -f database/docker-compose.yml up -d",
+    "get-schema": "graphql get-schema --project database"
+  },
+  "dependencies": {
+    "apollo-server": "2.1.0",
+    "graphql": "14.0.2",
+    "graphql-import": "0.7.1",
+    "prisma": "1.17.1",
+    "prisma-binding": "2.1.6"
+  },
+  "devDependencies": {
+    "graphql-cli": "2.16.7"
+  }
+}

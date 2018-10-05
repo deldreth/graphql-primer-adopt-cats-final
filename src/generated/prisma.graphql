@@ -1,0 +1,625 @@
+# source: http://localhost:4466
+# timestamp: Thu Oct 04 2018 22:04:05 GMT-0400 (EDT)
+
+type AggregateCat {
+  count: Int!
+}
+
+type AggregateLocation {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Cat implements Node {
+  id: ID!
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+  location(where: LocationWhereInput): Location
+}
+
+"""A connection to a list of items."""
+type CatConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CatEdge]!
+  aggregate: AggregateCat!
+}
+
+input CatCreateInput {
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+  location: LocationCreateOneWithoutCatsInput
+}
+
+input CatCreateManyWithoutLocationInput {
+  create: [CatCreateWithoutLocationInput!]
+  connect: [CatWhereUniqueInput!]
+}
+
+input CatCreateWithoutLocationInput {
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+}
+
+"""An edge in a connection."""
+type CatEdge {
+  """The item at the end of the edge."""
+  node: Cat!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CatOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  age_ASC
+  age_DESC
+  weight_ASC
+  weight_DESC
+  breed_ASC
+  breed_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CatPreviousValues {
+  id: ID!
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+}
+
+type CatSubscriptionPayload {
+  mutation: MutationType!
+  node: Cat
+  updatedFields: [String!]
+  previousValues: CatPreviousValues
+}
+
+input CatSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CatSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CatSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CatSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CatWhereInput
+}
+
+input CatUpdateInput {
+  name: String
+  age: Int
+  weight: Float
+  breed: String
+  location: LocationUpdateOneWithoutCatsInput
+}
+
+input CatUpdateManyWithoutLocationInput {
+  create: [CatCreateWithoutLocationInput!]
+  connect: [CatWhereUniqueInput!]
+  disconnect: [CatWhereUniqueInput!]
+  delete: [CatWhereUniqueInput!]
+  update: [CatUpdateWithWhereUniqueWithoutLocationInput!]
+  upsert: [CatUpsertWithWhereUniqueWithoutLocationInput!]
+}
+
+input CatUpdateWithoutLocationDataInput {
+  name: String
+  age: Int
+  weight: Float
+  breed: String
+}
+
+input CatUpdateWithWhereUniqueWithoutLocationInput {
+  where: CatWhereUniqueInput!
+  data: CatUpdateWithoutLocationDataInput!
+}
+
+input CatUpsertWithWhereUniqueWithoutLocationInput {
+  where: CatWhereUniqueInput!
+  update: CatUpdateWithoutLocationDataInput!
+  create: CatCreateWithoutLocationInput!
+}
+
+input CatWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CatWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CatWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CatWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  age: Int
+
+  """All values that are not equal to given value."""
+  age_not: Int
+
+  """All values that are contained in given list."""
+  age_in: [Int!]
+
+  """All values that are not contained in given list."""
+  age_not_in: [Int!]
+
+  """All values less than the given value."""
+  age_lt: Int
+
+  """All values less than or equal the given value."""
+  age_lte: Int
+
+  """All values greater than the given value."""
+  age_gt: Int
+
+  """All values greater than or equal the given value."""
+  age_gte: Int
+  weight: Float
+
+  """All values that are not equal to given value."""
+  weight_not: Float
+
+  """All values that are contained in given list."""
+  weight_in: [Float!]
+
+  """All values that are not contained in given list."""
+  weight_not_in: [Float!]
+
+  """All values less than the given value."""
+  weight_lt: Float
+
+  """All values less than or equal the given value."""
+  weight_lte: Float
+
+  """All values greater than the given value."""
+  weight_gt: Float
+
+  """All values greater than or equal the given value."""
+  weight_gte: Float
+  breed: String
+
+  """All values that are not equal to given value."""
+  breed_not: String
+
+  """All values that are contained in given list."""
+  breed_in: [String!]
+
+  """All values that are not contained in given list."""
+  breed_not_in: [String!]
+
+  """All values less than the given value."""
+  breed_lt: String
+
+  """All values less than or equal the given value."""
+  breed_lte: String
+
+  """All values greater than the given value."""
+  breed_gt: String
+
+  """All values greater than or equal the given value."""
+  breed_gte: String
+
+  """All values containing the given string."""
+  breed_contains: String
+
+  """All values not containing the given string."""
+  breed_not_contains: String
+
+  """All values starting with the given string."""
+  breed_starts_with: String
+
+  """All values not starting with the given string."""
+  breed_not_starts_with: String
+
+  """All values ending with the given string."""
+  breed_ends_with: String
+
+  """All values not ending with the given string."""
+  breed_not_ends_with: String
+  location: LocationWhereInput
+}
+
+input CatWhereUniqueInput {
+  id: ID
+}
+
+type Location implements Node {
+  id: ID!
+  name: String!
+  cats(where: CatWhereInput, orderBy: CatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cat!]
+}
+
+"""A connection to a list of items."""
+type LocationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LocationEdge]!
+  aggregate: AggregateLocation!
+}
+
+input LocationCreateInput {
+  name: String!
+  cats: CatCreateManyWithoutLocationInput
+}
+
+input LocationCreateOneWithoutCatsInput {
+  create: LocationCreateWithoutCatsInput
+  connect: LocationWhereUniqueInput
+}
+
+input LocationCreateWithoutCatsInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type LocationEdge {
+  """The item at the end of the edge."""
+  node: Location!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LocationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LocationPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type LocationSubscriptionPayload {
+  mutation: MutationType!
+  node: Location
+  updatedFields: [String!]
+  previousValues: LocationPreviousValues
+}
+
+input LocationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LocationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LocationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LocationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LocationWhereInput
+}
+
+input LocationUpdateInput {
+  name: String
+  cats: CatUpdateManyWithoutLocationInput
+}
+
+input LocationUpdateOneWithoutCatsInput {
+  create: LocationCreateWithoutCatsInput
+  connect: LocationWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: LocationUpdateWithoutCatsDataInput
+  upsert: LocationUpsertWithoutCatsInput
+}
+
+input LocationUpdateWithoutCatsDataInput {
+  name: String
+}
+
+input LocationUpsertWithoutCatsInput {
+  update: LocationUpdateWithoutCatsDataInput!
+  create: LocationCreateWithoutCatsInput!
+}
+
+input LocationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LocationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LocationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LocationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  cats_every: CatWhereInput
+  cats_some: CatWhereInput
+  cats_none: CatWhereInput
+}
+
+input LocationWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createLocation(data: LocationCreateInput!): Location!
+  createCat(data: CatCreateInput!): Cat!
+  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
+  updateCat(data: CatUpdateInput!, where: CatWhereUniqueInput!): Cat
+  deleteLocation(where: LocationWhereUniqueInput!): Location
+  deleteCat(where: CatWhereUniqueInput!): Cat
+  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
+  upsertCat(where: CatWhereUniqueInput!, create: CatCreateInput!, update: CatUpdateInput!): Cat!
+  updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
+  updateManyCats(data: CatUpdateInput!, where: CatWhereInput): BatchPayload!
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  deleteManyCats(where: CatWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
+  cats(where: CatWhereInput, orderBy: CatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cat]!
+  location(where: LocationWhereUniqueInput!): Location
+  cat(where: CatWhereUniqueInput!): Cat
+  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  catsConnection(where: CatWhereInput, orderBy: CatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CatConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  cat(where: CatSubscriptionWhereInput): CatSubscriptionPayload
+}
