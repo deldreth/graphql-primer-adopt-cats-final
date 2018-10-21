@@ -1,15 +1,13 @@
-version: '3'
+version: "3"
 services:
   prisma:
     image: prismagraphql/prisma:1.14
     restart: always
     ports:
-    - "4466:4466"
+      - "4466:4466"
     environment:
       PRISMA_CONFIG: |
         port: 4466
-        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
-        # managementApiSecret: my-secret
         databases:
           default:
             connector: mysql
@@ -25,5 +23,4 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
       - mysql:/var/lib/mysql
-volumes:
-  mysql:
+volumes: mysql:
