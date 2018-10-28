@@ -1,14 +1,14 @@
-const { ApolloServer } = require("apollo-server");
-const { importSchema } = require("graphql-import");
-const { Prisma } = require("prisma-binding");
-const path = require("path");
+const { ApolloServer } = require('apollo-server');
+const { importSchema } = require('graphql-import');
+const { Prisma } = require('prisma-binding');
+const path = require('path');
 
 const resolvers = {
   Query: {
     location: (obj, args, context, info) => {
       return context.prisma.query.location(
         {
-          where: { id: args.id }
+          where: { id: args.id },
         },
         info
       );
@@ -16,14 +16,14 @@ const resolvers = {
     cat: (obj, args, context, info) => {
       return context.prisma.query.cat(
         {
-          where: { id: args.id }
+          where: { id: args.id },
         },
         info
       );
     },
     getLocations: (obj, args, context, info) => {
       return context.prisma.query.locations({}, info);
-    }
+    },
   },
   Mutation: {
     addCat: (obj, args, context, info) => {
@@ -36,10 +36,10 @@ const resolvers = {
             breed: args.input.breed,
             location: {
               connect: {
-                id: args.locationId
-              }
-            }
-          }
+                id: args.locationId,
+              },
+            },
+          },
         },
         info
       );
@@ -48,12 +48,12 @@ const resolvers = {
       return context.prisma.mutation.createLocation(
         {
           data: {
-            name: args.input.name
-          }
+            name: args.input.name,
+          },
         },
         info
       );
-    }
+    },
   },
   Subscription: {
     locationAdded: {
@@ -61,46 +61,46 @@ const resolvers = {
         return context.prisma.subscription.location(
           {
             where: {
-              mutation_in: ["CREATED", "UPDATED"]
-            }
+              mutation_in: ['CREATED', 'UPDATED'],
+            },
           },
           info
         );
-      }
+      },
     },
     catAddedOrUpdated: {
       subscribe: (obj, args, context, info) => {
         return context.prisma.subscription.cat(
           {
             where: {
-              mutation_in: ["CREATED", "UPDATED"],
+              mutation_in: ['CREATED', 'UPDATED'],
               node: {
                 location: {
-                  id: args.locationId
-                }
-              }
-            }
+                  id: args.locationId,
+                },
+              },
+            },
           },
           info
         );
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
-const typeDefs = importSchema(path.resolve("src/schema.graphql"));
+const typeDefs = importSchema(path.resolve('src/schema.graphql'));
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  subscriptions: "/",
+  subscriptions: '/',
   context: req => ({
     ...req,
     prisma: new Prisma({
-      typeDefs: "src/generated/prisma.graphql",
-      endpoint: "http://localhost:4466"
-    })
-  })
+      typeDefs: 'src/generated/prisma.graphql',
+      endpoint: 'http://localhost:4466',
+    }),
+  }),
 });
 
 server.listen({ port: 4000 }).then(({ url, subscriptionsUrl }) => {
