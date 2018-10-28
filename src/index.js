@@ -5,7 +5,7 @@ const path = require("path");
 
 const resolvers = {
   Query: {
-    location: (_, args, context, info) => {
+    location: (obj, args, context, info) => {
       return context.prisma.query.location(
         {
           where: { id: args.id }
@@ -13,7 +13,7 @@ const resolvers = {
         info
       );
     },
-    cat: (_, args, context, info) => {
+    cat: (obj, args, context, info) => {
       return context.prisma.query.cat(
         {
           where: { id: args.id }
@@ -21,12 +21,12 @@ const resolvers = {
         info
       );
     },
-    getLocations: (_, args, context, info) => {
+    getLocations: (obj, args, context, info) => {
       return context.prisma.query.locations({}, info);
     }
   },
   Mutation: {
-    addCat: (_, args, context, info) => {
+    addCat: (obj, args, context, info) => {
       return context.prisma.mutation.createCat(
         {
           data: {
@@ -44,7 +44,7 @@ const resolvers = {
         info
       );
     },
-    addLocation: (_, args, context, info) => {
+    addLocation: (obj, args, context, info) => {
       return context.prisma.mutation.createLocation(
         {
           data: {
@@ -54,6 +54,37 @@ const resolvers = {
         info
       );
     }
+  },
+  Subscription: {
+    locationAdded: {
+      subscribe: (obj, args, context, info) => {
+        return context.prisma.subscription.location(
+          {
+            where: {
+              mutation_in: ["CREATED", "UPDATED"]
+            }
+          },
+          info
+        );
+      }
+    },
+    catAddedOrUpdated: {
+      subscribe: (obj, args, context, info) => {
+        return context.prisma.subscription.cat(
+          {
+            where: {
+              mutation_in: ["CREATED", "UPDATED"],
+              node: {
+                location: {
+                  id: args.locationId
+                }
+              }
+            }
+          },
+          info
+        );
+      }
+    }
   }
 };
 
@@ -62,6 +93,7 @@ const typeDefs = importSchema(path.resolve("src/schema.graphql"));
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  subscriptions: "/",
   context: req => ({
     ...req,
     prisma: new Prisma({
@@ -71,6 +103,8 @@ const server = new ApolloServer({
   })
 });
 
-server.listen({ port: 4000 }).then(({ url }) => {
-  console.log(`🐈  🐈  🐈  ready at ${url}`);
+server.listen({ port: 4000 }).then(({ url, subscriptionsUrl }) => {
+  console.log(
+    `🐈  🐈  🐈  ready at ${url}, subscriptions at ${subscriptionsUrl}`
+  );
 });

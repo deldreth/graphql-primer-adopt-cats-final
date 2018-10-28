@@ -1,5 +1,5 @@
-# import Location from './generated/prisma.graphql'
-# import Cat from './generated/prisma.graphql'
+# import Location, LocationSubscriptionPayload from './generated/prisma.graphql'
+# import Cat, CatSubscriptionPayload from './generated/prisma.graphql'
 
 input LocationInput {
   name: String!
@@ -23,7 +23,13 @@ type Mutation {
   addCat(locationId: ID!, input: CatInput): Cat!
 }
 
+type Subscription {
+  locationAdded: LocationSubscriptionPayload
+  catAddedOrUpdated(locationId: ID!): CatSubscriptionPayload
+}
+
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
