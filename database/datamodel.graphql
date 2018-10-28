@@ -12,14 +12,3 @@ type Cat {
   breed: String
   location: Location
 }
-
-input LocationInput {
-  name: String!
-}
-
-input CatInput {
-  name: String!
-  age: Int
-  weight: Float
-  breed: String
-}

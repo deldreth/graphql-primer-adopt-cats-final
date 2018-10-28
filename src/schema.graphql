@@ -1,16 +1,5 @@
-# import Location, LocationSubscriptionPayload from './generated/prisma.graphql'
-# import Cat, CatSubscriptionPayload from './generated/prisma.graphql'
-
-input LocationInput {
-  name: String!
-}
-
-input CatInput {
-  name: String!
-  age: Int
-  weight: Float
-  breed: String
-}
+# import Location, LocationCreateInput, LocationSubscriptionPayload from './generated/prisma.graphql'
+# import Cat, CatCreateInput, CatSubscriptionPayload from './generated/prisma.graphql'
 
 type Query {
   location(id: ID!): Location!
@@ -19,8 +8,8 @@ type Query {
 }
 
 type Mutation {
-  addLocation(input: LocationInput): Location!
-  addCat(locationId: ID!, input: CatInput): Cat!
+  addLocation(input: LocationCreateInput): Location!
+  addCat(locationId: ID!, input: CatCreateInput): Cat!
 }
 
 type Subscription {
